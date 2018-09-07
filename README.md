@@ -52,3 +52,4 @@ Expectations:
 - App should be working
 - Code should be modular and readable
 - Unit tests
+- Your choice of language is one with which you are comfortable
