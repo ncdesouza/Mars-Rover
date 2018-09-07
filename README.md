@@ -38,7 +38,14 @@ Rover2:5 1 E
 ```
 Task:
 
-Develop a command line app that can take the various inputs from the command line and generate the desired outputs.
+Develop a command line app that can take the various inputs from the command line and generate the desired outputs. The application must accept a sequence of inputs from the command line or a file. Example input from file:
+```
+$ app < input.txt
+Rover1:1 3 N
+Rover2:5 1 E
+$
+```
+See `input.txt` in this repo for a sample test input.
 
 Expectations:
 
