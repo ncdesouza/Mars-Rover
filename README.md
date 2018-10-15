@@ -1,5 +1,7 @@
 ## Mars Rover
 
+***please see bottom for instructions on  running**
+
 A squad of robotic rovers are to be landed by NASA on a plateau on Mars.
 
 This plateau, which is curiously rectangular, must be navigated by the rovers so that their on board cameras can get a complete view of the surrounding terrain to send back to Earth.
@@ -53,3 +55,17 @@ Expectations:
 - Code should be modular and readable
 - Unit tests
 - Your choice of language is one with which you are comfortable
+
+How to Run:
+
+1) Install Dependencies
+
+    `run npm i`
+
+2) Run Command Line
+
+    `npm start`
+    
+3) Run with `input.txt`
+
+    `npm start < input.txt`
