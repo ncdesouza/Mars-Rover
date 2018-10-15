@@ -1,5 +1,5 @@
 import * as math from 'mathjs';
-import Direction from "../direction";
+import {Direction} from "../direction";
 
 class Position {
 

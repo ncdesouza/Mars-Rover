@@ -2,7 +2,10 @@
   "name": "mars-rover",
   "version": "1.0.0",
   "scripts": {
-    "test": "mocha -r ts-node/register src/**/*.spec.ts"
+    "start": "node -r ts-node/register src/index.ts",
+    "build": "tsc",
+    "debug": "node %NODE_DEBUG_OPTION% -r ts-node/register src/index.ts",
+    "test": "nyc mocha -r ts-node/register src/**/*.spec.ts"
   },
   "dependencies": {
     "mathjs": "^5.2.0",
@@ -11,8 +14,32 @@
   "devDependencies": {
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
+    "@types/node": "^10.11.7",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "source-map-support": "^0.5.9",
     "ts-node": "^7.0.1"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "exclude": [
+      "**/*.spec.js",
+      "dist",
+      "node_modules",
+      ".nyc_output"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }

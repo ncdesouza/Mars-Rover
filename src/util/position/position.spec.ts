@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import 'mocha';
 import Position from "./position";
-import Direction, {East, North, South, West} from "../direction";
+import {Direction, East, North, South, West} from "../direction";
 
 describe('Initialize', () => {
     it('Test valid position', () => {

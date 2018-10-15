@@ -1,6 +1,6 @@
 import Plateau from "../plateau";
 import Position from "../util/position";
-import Direction from "../util/direction";
+import {Direction} from "../util/direction";
 
 class Rover {
 
@@ -41,7 +41,7 @@ class Rover {
 
     getLocationString() : string {
         let [x, y] = this._position.vector;
-        return `${this._name} ${x} ${y} ${this._direction.name}`
+        return `${this._name}:${x} ${y} ${this._direction.name}`
     }
 
 }
