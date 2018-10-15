@@ -56,7 +56,11 @@ Expectations:
 - Unit tests
 - Your choice of language is one with which you are comfortable
 
-How to Run:
+### How to Run:
+
+    Requirements:
+        - node v8.10.0^
+        - npm v6.4.0^
 
 1) Install Dependencies
 
