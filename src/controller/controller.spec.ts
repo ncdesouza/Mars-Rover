@@ -8,14 +8,17 @@ import Rover from "../rover/rover";
 import MoveCommand from "./command/move-command";
 import TurnLeftCommand from "./command/turn-left-command";
 import TurnRightCommand from "./command/turn-right-command";
+import RoverPositionMap from "./rover-position-map";
 
 describe('CommandLineController => parseLine', () => {
     const plateau = new Plateau(5, 5);
     const direction = new North();
     const position = new Position(1, 2);
-    const rover = new Rover('Rover1', position, direction, plateau);
+    const rover = new Rover('Rover1', position, direction);
+    const roverPositions = new RoverPositionMap();
 
-    const controller = new Controller(rover);
+
+    const controller = new Controller(rover,plateau, roverPositions);
     const moveCmd = new MoveCommand();
     const leftTurnCmd = new TurnLeftCommand();
     const rightTurnCmd = new TurnRightCommand();

@@ -1,12 +1,15 @@
 import Controller from "./controller";
 import Plateau from "../plateau/plateau";
 import Rover from "../rover/rover";
-import Position from "../util/position/position";
 import DirectionFactory from "../util/direction/direction-factory";
 import MoveCommand from "./command/move-command";
 import TurnLeftCommand from "./command/turn-left-command";
 import TurnRightCommand from "./command/turn-right-command";
 import Command from "./command/command";
+import RoverPositionMap from "./rover-position-map";
+import RoverControllerMap from "./rover-controller-map";
+import LandCommand from "./command/land-command";
+import Position from "../util/position/position";
 
 const COMMAND_MAP : { [key: string] : Command } = {
     'M': new MoveCommand(),
@@ -17,10 +20,12 @@ const COMMAND_MAP : { [key: string] : Command } = {
 class CommandLineController {
 
     private _plateau : Plateau;
-    private readonly _controllerMap : { [key: string] : Controller };
+    private readonly _controllerMap : RoverControllerMap;
+    private readonly _roverPositions : RoverPositionMap;
 
     constructor() {
-        this._controllerMap = {};
+        this._controllerMap = new RoverControllerMap();
+        this._roverPositions = new RoverPositionMap();
     }
 
     parseLine(line : string) : string {
@@ -64,19 +69,17 @@ class CommandLineController {
         }
 
         const [x, y, cardinalDirection] = params.split(" ");
+
         this.deployRover(name, parseInt(x), parseInt(y), cardinalDirection);
     }
 
     private buildAndExecuteInstructionsCommand(params: string, name: string) : string {
-        if (!this._controllerMap[name]) {
-            throw new Error('No rover found. Rover must be landed on plateau before providing instructions.')
-        }
-
         const commands : Command[] = [];
         for (let i = 0; i < params.length; i++) {
             const cmdChar = params[i];
             commands.push(COMMAND_MAP[cmdChar]);
         }
+
         return this.runCommands(name, commands);
     }
 
@@ -87,15 +90,30 @@ class CommandLineController {
     private deployRover(name : string, x : number, y : number, cardinalDirection) : void {
         const position = new Position(x, y);
         const direction = DirectionFactory.getDirection(cardinalDirection);
-        const rover = new Rover(name, position, direction, this._plateau);
-        this._controllerMap[name] = new Controller(rover);
+        const rover = new Rover(name, position, direction);
+        const controller = new Controller(rover, this._plateau, this._roverPositions);
+        this._controllerMap.setController(name, controller);
+
+        const landedPosition = controller.sendCommand(new LandCommand());
+
+        this._roverPositions.setPosition(name, landedPosition);
+
     }
 
     private runCommands(name : string, commands : Command[]) : string {
-        const controller = this._controllerMap[name];
-        for (const command of commands) {
-            controller.sendCommand(command);
+        const controller = this._controllerMap.getController(name);
+
+        if (!controller) {
+            throw new Error('No rover found. Rover must be landed on plateau before providing instructions.')
         }
+
+        for (const command of commands) {
+
+            const nextPosition = controller.sendCommand(command);
+            this._roverPositions.setPosition(name, nextPosition);
+
+        }
+
         return controller.getLocation();
     }
 }

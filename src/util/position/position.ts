@@ -14,7 +14,7 @@ class Position {
 
     move(direction : Direction, magnitude : number = 1): Position {
         let [x, y] = math.add(this._vector, math.multiply(direction.vector, magnitude));
-        return new Position(x, y)
+        return new Position(x, y);
     }
 
     get vector(): number[] {

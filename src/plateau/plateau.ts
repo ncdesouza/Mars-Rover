@@ -15,9 +15,17 @@ class Plateau {
 
     isValidPosition(position : Position) : boolean {
         let [x, y] = position.vector;
-        return x >= 0 && x <= this._length && y >=0 && y <= this._width;
+        return x >= 0 && x <= this._width && y >=0 && y <= this._length;
     }
 
+
+    get width(): number {
+        return this._width;
+    }
+
+    get length(): number {
+        return this._length;
+    }
 }
 
 export default Plateau;
