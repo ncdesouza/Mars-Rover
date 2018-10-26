@@ -73,3 +73,7 @@ Expectations:
 3) Run with `input.txt`
 
     `npm start < input.txt`
+    
+4) Run tests
+    
+    `npm test`
